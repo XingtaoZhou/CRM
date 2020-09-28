@@ -18,4 +18,14 @@
 
     <!--声明注解驱动-->
     <mvc:annotation-driven/>
+
+    <!--声明拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--指定拦截的url-->
+            <mvc:mapping path="/**"/>
+            <!--声明拦截器对象-->
+            <bean class="com.zxt.settings.handler.MyInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
