@@ -24,7 +24,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				login();
 			})
 			//为当前窗口绑定敲键盘事件
-			$(window).keyCode(function (event){
+			$(window).keydown(function (event){
+				//alert(event.keyCode)
 				if (event.keyCode == 13){
 					login();
 				}
@@ -57,6 +58,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 					if(resp.success){
 						//登录成功，跳转
+						window.location.href = "workbench/index.html"
 					}
 					else {
 						//登陆失败，显示错误信息

@@ -14,20 +14,60 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<script>
 
 		$(function (){
+			//页面加载完毕，清空用户名中的数据
+			$("#loginAct").val("");
+
 			//页面加载完毕。用户名栏获得焦点
 			$("#loginAct").focus();
 
 			$("#submitBtn").click(function (){
-				alert("执行登录验证")
+				login();
 			})
 			//为当前窗口绑定敲键盘事件
-			$(window).keyCode(function (event){
+			$(window).keydown(function (event){
+				//alert(event.keyCode)
 				if (event.keyCode == 13){
-					alert("验证登录")
+					login();
 				}
 			})
 
 		})
+		//登录验证函数
+		function login(){
+			//获得用户名和密码，使用$.trim()函数去除空格
+			var loginAct = $.trim($("#loginAct").val());
+			var loginPwd = $.trim($("#loginPwd").val());
+
+			if(loginAct == "" || loginPwd == ""){
+				$("#msg").html("用户名密码不能为空！");
+				return false;
+			}
+			$.ajax({
+				url:"login.do",
+				data:{
+					"loginAct":loginAct,
+					"loginPwd":loginPwd
+				},
+				dataType:"json",
+				type:"post",
+				success:function (resp){
+					/*
+					* resp中的数据有什么？
+					* {"success":true/false  "msg":"错误信息"}
+					* */
+
+					if(resp.success){
+						//登录成功，跳转
+						window.location.href = "workbench/index.html"
+					}
+					else {
+						//登陆失败，显示错误信息
+						$("#msg").html(resp.msg);
+					}
+				}
+			})
+
+		}
 
 	</script>
 </head>
@@ -54,7 +94,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					</div>
 					<div class="checkbox"  style="position: relative;top: 30px; left: 10px;">
 						
-							<span id="msg"></span>
+							<span id="msg" style="color: red"></span>
 						
 					</div>
 					<button type="button" id="submitBtn" class="btn btn-primary btn-lg btn-block"  style="width: 350px; position: relative;top: 45px;">登录</button>
