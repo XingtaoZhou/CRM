@@ -3,6 +3,7 @@ package com.zxt.settings.controller;
 
 import com.zxt.settings.dao.UserDao;
 import com.zxt.settings.domain.Activity;
+import com.zxt.settings.domain.ActivityRemark;
 import com.zxt.settings.domain.User;
 import com.zxt.settings.service.ActivityService;
 import com.zxt.settings.vo.PageVo;
@@ -11,7 +12,9 @@ import com.zxt.utils.UUIDUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.w3c.dom.ls.LSException;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -54,6 +57,7 @@ public class ActivityController {
         }
         return map;
     }
+
     @RequestMapping("/pageList.do")
     @ResponseBody
     public PageVo<Activity> pageList(HttpServletRequest request){
@@ -80,5 +84,71 @@ public class ActivityController {
         PageVo<Activity> vo = service.pageList(pageMap);
 
         return vo;
+    }
+
+    @RequestMapping("/deleteActivity.do")
+    @ResponseBody
+    public Map<String,Object> deleteActivity(HttpServletRequest request){
+
+        String ids[] = request.getParameterValues("id");
+
+        Boolean flag = service.deleteActivity(ids);
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("success",flag);
+        return map;
+    }
+
+
+    @RequestMapping("/getUserListAndActivity.do")
+    @ResponseBody
+    public Map<String,Object> getUserListAndActivity(String id){
+
+        Map<String,Object> map = service.getUserListAndActivity(id);
+
+        return map;
+    }
+
+    @RequestMapping("/updateActivity.do")
+    @ResponseBody
+    public Map<String,Object> updateActivity(Activity activity , HttpServletRequest request){
+
+        activity.setEditTime(DateTimeUtil.getSysTime());
+        activity.setEditBy(((User)request.getSession().getAttribute("user")).getName());
+
+        Map<String,Object> map = service.updateActivity(activity);
+
+        return map;
+    }
+
+    @RequestMapping("/detail.do")
+    public ModelAndView detail(HttpServletRequest request){
+
+        String id = request.getParameter("id");
+
+        Activity activity = service.detail(id);
+
+        ModelAndView mv = new ModelAndView();
+
+        mv.addObject("activity",activity);
+        mv.setViewName("/workbench/activity/detail.jsp");
+
+        return mv;
+    }
+
+    @RequestMapping("/getRemarkById.do")
+    @ResponseBody
+    public List<ActivityRemark> getRemarkById(HttpServletRequest request){
+
+        String id = request.getParameter("id");
+        List<ActivityRemark> list = service.getRemarkById(id);
+        return list;
+    }
+
+    @RequestMapping("/deleteRemark.do")
+    @ResponseBody
+    public Map<String,Object> deleteRemark(HttpServletRequest request){
+        String id = request.getParameter("id");
+        return service.deleteRemark(id);
     }
 }

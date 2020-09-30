@@ -4,6 +4,53 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zxt.settings.dao.ActivityDao">
 
+    <select id="detail" resultType="Activity">
+        select
+        a.id,
+        b.name as owner,
+        a.name,
+        a.startDate,
+        a.endDate,
+        a.cost,
+        a.description,
+        a.createTime,
+        a.createBy,
+        a.editTime,
+        a.editBy
+        from tbl_activity a
+        join tbl_user b
+        on a.owner = b.id
+        where a.id = #{id}
+    </select>
+
+    <update id="updateActivity">
+        update tbl_activity set
+        owner=#{owner},
+        name=#{name},
+        startDate=#{startDate},
+        endDate=#{endDate},
+        cost=#{cost},
+        description=#{description},
+        editTime=#{editTime},
+        editBy=#{editBy}
+        where id = #{id}
+    </update>
+
+    <select id="selectById" resultType="Activity">
+        select * from tbl_activity where id = #{id}
+    </select>
+
+    <delete id="deleteActivity">
+        delete
+        from tbl_activity
+        where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=";">
+            #{id}
+        </foreach>
+    </delete>
+
+
+
     <insert id="saveActivity">
         insert into tbl_activity(id,owner,name,startDate,endDate,cost,description,createTime,createBy)
         values (#{id},#{owner},#{name},#{startDate},#{endDate},#{cost},#{description},
