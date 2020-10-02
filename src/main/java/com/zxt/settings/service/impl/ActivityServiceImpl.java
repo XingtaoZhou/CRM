@@ -129,4 +129,34 @@ public class ActivityServiceImpl implements ActivityService {
         map.put("success",flag);
         return map;
     }
+
+    @Override
+    public Map<String, Object> saveRemark(ActivityRemark remark) {
+
+        Boolean flag = true;
+        //获得添加成功标志
+        int result = remarkDao.saveRemark(remark);
+        if (result != 1){
+            flag = false;
+        }
+        //获得备注信息
+        Map<String,Object> map = new HashMap<>();
+        map.put("success",flag);
+        map.put("remark",remark);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> updateRemark(ActivityRemark remark) {
+
+        Map<String, Object> map = new HashMap<>();
+        Boolean flag = true;
+        int result = remarkDao.updateRemark(remark);
+        if (result != 1){
+            flag = false;
+        }
+        map.put("success",flag);
+        map.put("remark",remark);
+        return map;
+    }
 }

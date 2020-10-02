@@ -20,4 +20,6 @@ public interface ActivityDao {
     int updateActivity(Activity activity);
 
     Activity detail(String id);
+
+    List<Activity> getActivityByName(Map<String,Object> map);
 }

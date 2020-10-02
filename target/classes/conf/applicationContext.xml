@@ -6,6 +6,7 @@
 
     <!--声明组件扫描器-->
     <context:component-scan base-package="com.zxt.settings.service"/>
+    <context:component-scan base-package="com.zxt.settings.listener"/>
 
     <!--数据库-->
     <context:property-placeholder location="classpath:conf/jdbc.properties"/>
@@ -28,5 +29,9 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <property name="basePackage" value="com.zxt.settings.dao"/>
     </bean>
+    <!--<bean id="sysInitListener" class="com.zxt.settings.listener.SysInitListener"/>-->
+
+    <bean id="dicservice" class="com.zxt.settings.service.impl.DicServiceImpl"/>
+
 
 </beans>

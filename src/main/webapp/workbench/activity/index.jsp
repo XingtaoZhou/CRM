@@ -69,7 +69,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			* */
 			//alert(123)
 			$.ajax({
-				url:"getUserList.do",
+				url:"Activity/getUserList.do",
 				type:"get",
 				dataType:"json",
 				success:function (resp){
@@ -103,7 +103,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				var id = $fxk.val();
 				//根据id查找Activity信息，查找userList，局部刷新
 				$.ajax({
-					url:"getUserListAndActivity.do",
+					url:"Activity/getUserListAndActivity.do",
 					data:{
 						"id":id
 					},
@@ -135,7 +135,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			//模态窗口中修改按钮的单价事件
 			$("#updateBtn").click(function (){
 				$.ajax({
-					url:"updateActivity.do",
+					url:"Activity/updateActivity.do",
 					data:{
 						"id":$.trim($("#edit-marketActivityId").val()),
 						"owner":$.trim($("#edit-marketActivityOwner").val()),
@@ -193,7 +193,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					}
 					//alert(param)
 					$.ajax({
-						url:"deleteActivity.do",
+						url:"Activity/deleteActivity.do",
 						data:param,
 						type:"get",
 						dataType:"json",
@@ -216,7 +216,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		//添加Activity数据，保存按钮单击事件
         $("#saveBtn").click(function (){
             $.ajax({
-                url:"saveActivity.do",
+                url:"Activity/saveActivity.do",
                 data:{
                     "owner":$.trim($("#create-marketActivityOwner").val()),
                     "name":$.trim($("#create-marketActivityName").val()),
@@ -254,14 +254,14 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 		//将全选的复选框取消
 		$("#qx").prop("checked",false);
-
+		//隐藏域中取值
 		$("#search_name").val($.trim($("#hidden_name").val()));
 		$("#search_owner").val($.trim($("#hidden_owner").val()));
 		$("#search_startDate").val($.trim($("#hidden_startTime").val()));
 		$("#search_endDate").val($.trim($("#hidden_endTime").val()));
 
 		$.ajax({
-			url:"pageList.do",
+			url:"Activity/pageList.do",
 			data:{
 				"pageNo":pageNo,
 				"pageSize":pageSize,
@@ -284,7 +284,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 					html += '<tr class="active">';
 					html += '<td><input type="checkbox" name="fxk" value="' + n.id + '"/></td>';
-					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
+					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'Activity/detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
 					html += '<td>'+n.owner+'</td>';
 					html += '<td>'+n.startDate+'</td>';
 					html += '<td>'+n.endDate+'</td>';

@@ -1,7 +1,5 @@
 package com.zxt.settings.controller;
 
-
-import com.zxt.settings.dao.UserDao;
 import com.zxt.settings.domain.Activity;
 import com.zxt.settings.domain.ActivityRemark;
 import com.zxt.settings.domain.User;
@@ -13,17 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.w3c.dom.ls.LSException;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.net.Inet4Address;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/Activity")
 public class ActivityController {
 
     @Resource
@@ -150,5 +145,32 @@ public class ActivityController {
     public Map<String,Object> deleteRemark(HttpServletRequest request){
         String id = request.getParameter("id");
         return service.deleteRemark(id);
+    }
+
+    @RequestMapping("/saveRemark.do")
+    @ResponseBody
+    public Map<String,Object> saveRemark(HttpServletRequest request){
+
+        ActivityRemark remark = new ActivityRemark();
+        remark.setActivityId(request.getParameter("activityId"));
+        remark.setNoteContent(request.getParameter("noteContent"));
+        remark.setCreateTime(DateTimeUtil.getSysTime());
+        User user = (User) request.getSession().getAttribute("user");
+        remark.setCreateBy(user.getName());
+        remark.setEditFlag("0");
+        remark.setId(UUIDUtil.getUUID());
+        return service.saveRemark(remark);
+    }
+
+    @RequestMapping("/updateRemark.do")
+    @ResponseBody
+    public Map<String,Object> updateRemark(ActivityRemark remark,HttpServletRequest request){
+
+        remark.setEditFlag("1");
+        remark.setEditTime(DateTimeUtil.getSysTime());
+        User user = (User) request.getSession().getAttribute("user");
+        remark.setEditBy(user.getName());
+
+        return service.updateRemark(remark);
     }
 }
