@@ -1,8 +1,6 @@
 package com.zxt.settings.service;
 
-import com.zxt.settings.domain.Activity;
-import com.zxt.settings.domain.Clue;
-import com.zxt.settings.domain.User;
+import com.zxt.settings.domain.*;
 import com.zxt.settings.vo.PageVo;
 
 import java.util.List;
@@ -23,4 +21,12 @@ public interface ClueService {
     Map<String, Object> deleteCARById(String id);
 
     List<Activity> getActivityByName(Map<String,Object> map);
+
+    Map<String, Object> bund(String cid, String[] ids);
+
+    List<Activity> searchActivityByName(String name);
+
+    void convert(String clueId, Tran tran, String createBy);
+
+    List<ClueRemark> getRemarkById(String id);
 }

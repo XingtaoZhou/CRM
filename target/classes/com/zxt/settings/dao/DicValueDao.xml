@@ -5,7 +5,7 @@
 <mapper namespace="com.zxt.settings.dao.DicValueDao">
 
     <select id="selectByTypeCode" resultType="DicValue">
-        select * from tbl_dic_value where typeCode = #{type}
+        select * from tbl_dic_value where typeCode = #{type} order by orderNo
     </select>
 
 

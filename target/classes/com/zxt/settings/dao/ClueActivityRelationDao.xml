@@ -9,4 +9,8 @@
         where id = #{id}
     </delete>
 
+    <insert id="insert">
+        insert into tbl_clue_activity_relation values (#{id},#{clueId},#{activityId})
+    </insert>
+
 </mapper>

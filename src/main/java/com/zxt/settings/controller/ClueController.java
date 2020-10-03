@@ -1,9 +1,7 @@
 package com.zxt.settings.controller;
 
 
-import com.zxt.settings.domain.Activity;
-import com.zxt.settings.domain.Clue;
-import com.zxt.settings.domain.User;
+import com.zxt.settings.domain.*;
 import com.zxt.settings.service.ClueService;
 import com.zxt.settings.vo.PageVo;
 import com.zxt.utils.DateTimeUtil;
@@ -120,6 +118,61 @@ public class ClueController {
         map.put("name",name);
         map.put("clueId",clueId);
         return service.getActivityByName(map);
+    }
+
+    @RequestMapping("/bund.do")
+    @ResponseBody
+    public Map<String,Object> bund(HttpServletRequest request){
+
+        String cid = request.getParameter("cid");
+        String ids[] = request.getParameterValues("id");
+
+        return service.bund(cid,ids);
+
+    }
+
+    @RequestMapping("/searchActivityByName.do")
+    @ResponseBody
+    public List<Activity> searchActivityByName(HttpServletRequest request){
+
+        String name = request.getParameter("name");
+
+        return service.searchActivityByName(name);
+    }
+
+    @RequestMapping("/convert.do")
+    public String convert(HttpServletRequest request){
+
+        Tran tran = null;
+        String flag = request.getParameter("flag");
+        User user = (User) request.getSession().getAttribute("user");
+        String createBy = user.getName();
+        String clueId = request.getParameter("clueId");
+
+        if ("a".equals(flag)){
+            //需要创建交易tran
+            tran.setId(UUIDUtil.getUUID());
+            tran.setMoney(request.getParameter("tranMoney"));
+            tran.setName(request.getParameter("tranName"));
+            tran.setExpectedDate(request.getParameter("expectedDate"));
+            tran.setStage(request.getParameter("stage"));
+            tran.setActivityId("activityId");
+            tran.setCreateTime(DateTimeUtil.getSysTime());
+            tran.setCreateBy(createBy);
+
+        }
+        //不需要交易
+        service.convert(clueId,tran,createBy);
+        return "";
+    }
+
+    @RequestMapping("/getRemarkById.do")
+    @ResponseBody
+    public List<ClueRemark> getRemarkById(HttpServletRequest request){
+
+        String id = request.getParameter("id");
+        return service.getRemarkById(id);
+
     }
 }
 

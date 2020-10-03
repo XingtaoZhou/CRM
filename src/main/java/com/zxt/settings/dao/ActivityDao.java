@@ -22,4 +22,6 @@ public interface ActivityDao {
     Activity detail(String id);
 
     List<Activity> getActivityByName(Map<String,Object> map);
+
+    List<Activity> searchActivityByName(String name);
 }

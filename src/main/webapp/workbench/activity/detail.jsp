@@ -100,6 +100,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                 }
             })
         })
+
         //为更新按钮绑定事件
         $("#updateRemarkBtn").click(function (){
 
@@ -161,6 +162,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			}
 		})
 	}
+
 	function deleteRemark(id) {
 		$.ajax({
 			url:"Activity/deleteRemark.do",
