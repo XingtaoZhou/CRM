@@ -151,6 +151,7 @@ public class ClueController {
 
         if ("a".equals(flag)){
             //需要创建交易tran
+            tran = new Tran();
             tran.setId(UUIDUtil.getUUID());
             tran.setMoney(request.getParameter("tranMoney"));
             tran.setName(request.getParameter("tranName"));
@@ -159,11 +160,10 @@ public class ClueController {
             tran.setActivityId("activityId");
             tran.setCreateTime(DateTimeUtil.getSysTime());
             tran.setCreateBy(createBy);
-
         }
-        //不需要交易
+
         service.convert(clueId,tran,createBy);
-        return "";
+        return "/workbench/clue/index.jsp";
     }
 
     @RequestMapping("/getRemarkById.do")

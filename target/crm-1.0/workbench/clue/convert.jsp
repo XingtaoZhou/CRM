@@ -95,12 +95,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		//为转换按钮添加绑定事件
 		$("#convertBtn").click(function (){
 			//判断是否要添加交易
-			if ($("#isCreateTransaction").prop()){
+			if ($("#isCreateTransaction").prop("checked")){
+				alert(111)
 				//创建交易
 				$("#tran-form").submit();
 			}else {
 				//不创建交易
-				window.location.href("Clue/convert.do?clueId=${param.id}")
+				window.location.href = "Clue/convert.do?clueId=${param.id}"
 			}
 
 		})
@@ -191,7 +192,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		  </div>
 		  <div class="form-group" style="width: 400px;position: relative; left: 20px;">
 		    <label for="tradeName">交易名称</label>
-		    <input type="text" class="form-control" id="tradeName" name="tranName" value="动力节点-">
+		    <input type="text" class="form-control" id="tradeName" name="tranName" >
 		  </div>
 		  <div class="form-group" style="width: 400px;position: relative; left: 20px;">
 		    <label for="expectedClosingDate">预计成交日期</label>

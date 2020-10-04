@@ -8,9 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 /*
@@ -43,5 +41,31 @@ public class SysInitListener implements ServletContextListener {
 
         }
         System.out.println("数据字典处理结束");
+
+        //解析properties文件
+        System.out.println("处理properties文件开始");
+        Map<String,String> pMap = new HashMap<>();
+        ResourceBundle rb = ResourceBundle.getBundle("properties/Stage2Possibility");
+        Enumeration<String> e = rb.getKeys();
+        while (e.hasMoreElements()){
+            String key = e.nextElement();
+            String value = rb.getString(key);
+            pMap.put(key,value);
+        }
+        application.setAttribute("pMap",pMap);
+        System.out.println("处理properties文件结束");
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

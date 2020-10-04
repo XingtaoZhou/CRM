@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!--声明组件扫描器-->
     <context:component-scan base-package="com.zxt.settings.service"/>
     <context:component-scan base-package="com.zxt.settings.listener"/>
 
     <!--数据库-->
-    <context:property-placeholder location="classpath:conf/jdbc.properties"/>
+    <context:property-placeholder location="classpath:properties/jdbc.properties"/>
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="url" value="${jdbc.url}"/>
@@ -33,5 +33,13 @@
 
     <bean id="dicservice" class="com.zxt.settings.service.impl.DicServiceImpl"/>
 
+    <!--使用spring的事务管理功能-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--提供数据源-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--开启事务驱动 选择tx结尾的-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>

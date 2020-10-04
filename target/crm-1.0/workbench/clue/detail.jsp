@@ -195,9 +195,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					html += '<h5 id="e'+n.id+'">'+n.noteContent+'</h5>';
 					html += '<font color="gray">线索</font> <font color="gray">-</font> <b>${clue.fullname}${clue.appellation}-${clue.company}</b> <small style="color: gray;" id="s'+n.id+'">'+(n.editFlag==0?n.createTime:n.editTime)+'由'+(n.editFlag==0?n.createBy:n.editBy)+'</small>';
 					html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
-					html += '<a class="myHref" href="javascript:void(0); onclick="updateRemark(\''+n.id+'\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>';
+					html += '<a class="myHref" href="javascript:void(0);" onclick="updateRemark(\''+n.id+'\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
 					html += '&nbsp;&nbsp;&nbsp;&nbsp;';
-					html += '<a class="myHref" href="javascript:void(0); onclick="deleteRemark(\''+n.id+'\')"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>';
+					html += '<a class="myHref" href="javascript:void(0);" onclick="deleteRemark(\''+n.id+'\')"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
 					html += '</div>';
 					html += '</div>';
 					html += '</div>';
@@ -209,8 +209,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		})
 	}
 
-	function updateRemark(){}
-	function deleteRemark(){}
+	function deleteRemark(id) {
+	}
+
+	function updateRemark(id){
+	}
 </script>
 
 </head>

@@ -7,6 +7,9 @@ import com.zxt.settings.vo.PageVo;
 import com.zxt.utils.DateTimeUtil;
 import com.zxt.utils.UUIDUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -159,12 +162,15 @@ public class ClueServiceImpl implements ClueService {
 
     }
 
+    @Transactional(
+            propagation = Propagation.REQUIRED,
+            isolation = Isolation.DEFAULT
+    )
     @Override
     public void convert(String clueId, Tran tran, String createBy) {
 
         Boolean flag = true;
         String currentTime = DateTimeUtil.getSysTime();
-
         //(1) 获取到线索id，通过线索id获取线索对象（线索对象当中封装了线索的信息）
         Clue clue = clueDao.getClueById(clueId);
         //(2) 通过线索对象提取客户信息，当该客户不存在的时候，新建客户（根据公司的名称精确匹配，判断该客户是否存在！）
@@ -174,12 +180,13 @@ public class ClueServiceImpl implements ClueService {
             //客户存在
         }else {
             //客户不存在，新建客户
+            customer = new Customer();
+            customer.setId(UUIDUtil.getUUID());
             customer.setWebsite(clue.getWebsite());
             customer.setPhone(clue.getPhone());
             customer.setOwner(clue.getOwner());
             customer.setNextContactTime(clue.getNextContactTime());
             customer.setName(clue.getCompany());
-            customer.setId(UUIDUtil.getUUID());
             customer.setDescription(clue.getDescription());
             customer.setCreateTime(currentTime);
             customer.setCreateBy(createBy);

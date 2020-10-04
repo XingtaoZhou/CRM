@@ -13,4 +13,8 @@
         insert into tbl_clue_activity_relation values (#{id},#{clueId},#{activityId})
     </insert>
 
+    <select id="getRelation" resultType="ClueActivityRelation">
+        select * from tbl_clue_activity_relation where clueId = #{clueId}
+    </select>
+
 </mapper>
