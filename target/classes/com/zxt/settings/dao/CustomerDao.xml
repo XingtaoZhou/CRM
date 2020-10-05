@@ -9,26 +9,12 @@
     </select>
 
     <select id="getCustomerByName" resultType="Customer">
-        select * from tbl_customer where name = #{company}
+        select * from tbl_customer where name = #{name}
     </select>
 
 
     <insert id="save" >
-        insert into tbl_customer(
-        id,
-        owner,
-        name,
-        website,
-        phone,
-        createBy,
-        createTime,
-        editBy,
-        editTime,
-        contactSummary,
-        nextContactTime,
-        description,
-        address
-        )
+        insert into tbl_customer
         values (
         #{id},
         #{owner},

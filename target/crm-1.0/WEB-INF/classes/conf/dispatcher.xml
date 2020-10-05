@@ -32,6 +32,7 @@
 
     <!--处理静态资源-->
     <mvc:resources mapping="/image/**" location="/image/"/>
+    <mvc:resources mapping="/ECharts/**" location="/ECharts/"/>
     <mvc:resources mapping="/jquery/**" location="/jquery/"/>
     <mvc:resources mapping="/setting/**" location="/settings/"/>
     <mvc:resources mapping="/workbench/**" location="/workbench/"/>
